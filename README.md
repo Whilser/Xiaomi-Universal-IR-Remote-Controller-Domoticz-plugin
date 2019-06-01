@@ -10,7 +10,7 @@ The plugin supports sending several IR commands at once when switching on / off 
 
 # Плагин Xiaomi Universal IR Remote Controller для Domoticz
 
-# Установка / Install
+# Установка / How to Install
 
     sudo apt-get install python3 python3-dev python3-pip
     sudo apt-get install libffi-dev libssl-dev
