@@ -1,7 +1,7 @@
 # Xiaomi Universal IR Remote Controller plugin for Domoticz
 Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz. The plugin is under development. The plugin was tested with python 3.5.x and Domoticz 4.x installed on Raspberry Pi.
 
-Plugin creates a command center. The control center has several buttons. **Reset Level** - used to reset incorrectly recognized IR code. **Learn** - used to receive (learn) IR code, **Test** - to test received IR code, **Save Level** - to save received commands into memory. There is another button - **Create**, it creates a new device in Domoticz to control devices with an IR port.
+Plugin creates a control center. The control center has several buttons. **Reset Level** - used to reset incorrectly recognized IR code. **Learn** - used to receive (learn) IR code, **Test** - to test received IR code, **Save Level** - to save received commands into memory. There is another button - **Create**, it creates a new device in Domoticz to control devices with an IR port.
 
 If before pressing **Create** only one level was saved, creates a Push On button, if two levels was saved it a Switch creates, which allows to turn on and off devices with an IR port. If 3 or more levels was saved, a selector switch is creates. 
 
