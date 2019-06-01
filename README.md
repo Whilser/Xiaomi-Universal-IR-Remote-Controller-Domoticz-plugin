@@ -5,19 +5,19 @@ Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz
 
 # Установка / Install
 
-sudo apt-get install python3 python3-dev python3-pip
-sudo apt-get install libffi-dev libssl-dev
-sudo pip3 install -U pip setuptools
-sudo pip3 install -U virtualenv
-cd domoticz/plugins
-git clone https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin.git Chuangmi
-cd Chuangmi
-virtualenv -p python3 .env
-source .env/bin/activate
-sudo pip3 install python-miio
-deactivate
+    sudo apt-get install python3 python3-dev python3-pip
+    sudo apt-get install libffi-dev libssl-dev
+    sudo pip3 install -U pip setuptools
+    sudo pip3 install -U virtualenv
+    cd domoticz/plugins
+    git clone https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin.git Chuangmi
+    cd Chuangmi
+    virtualenv -p python3 .env
+    source .env/bin/activate
+    sudo pip3 install python-miio
+    deactivate
 
-sudo service domoticz restart
+    sudo service domoticz restart
 
 # Внимание! Плагин находится в разработке, в дальнейшем возможны изменения. 
 
