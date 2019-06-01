@@ -168,13 +168,13 @@ class BasePlugin:
             self.levelsCount = 0
 
     def onNotification(self, Name, Subject, Text, Status, Priority, Sound, ImageFile):
-        Domoticz.Log("Notification: " + Name + "," + Subject + "," + Text + "," + Status + "," + str(Priority) + "," + Sound + "," + ImageFile)
+        Domoticz.Debug("Notification: " + Name + "," + Subject + "," + Text + "," + Status + "," + str(Priority) + "," + Sound + "," + ImageFile)
 
     def onDisconnect(self, Connection):
-        Domoticz.Log("onDisconnect called")
+        Domoticz.Debug("onDisconnect called")
 
     def onHeartbeat(self):
-        Domoticz.Log("onHeartbeat called")
+        Domoticz.Debug("onHeartbeat called")
 
     def dumpConfig(self):
         json_Path = os.path.join(str(Parameters['HomeFolder']), 'Chuangmi_ir'+str(Parameters["HardwareID"])+'.json')
