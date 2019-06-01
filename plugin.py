@@ -2,7 +2,7 @@
 #           Xiaomi Universal IR Remote Controller (Chuangmi IR) python Plugin for Domoticz
 #           Version 0.1.0
 
-#           Based on lib python miio https://github.com/rytilahti/python-miio
+#           Powered by lib python miio https://github.com/rytilahti/python-miio
 #
 
 """
