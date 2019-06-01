@@ -6,7 +6,7 @@ The control center has several buttons. **Reset Level** - used to reset incorrec
 If before pressing **Create** only one level was saved, creates a Push On button, if two levels was saved it a Switch creates, which allows to turn on and off devices with an IR port. If 3 or more levels was saved, a selector switch is creates. The plugin supports sending several IR commands at once when switching on / off in Domoticz. Just press the **Learn** button several times with sending an IR command from the remote before saving the level (**Save** button). 
 
 
-# Плагин Xiaomi Universal IR-Remote Controller для Domoticz
+# Плагин Xiaomi Universal IR Remote Controller для Domoticz
 
 # Установка / Install
 
