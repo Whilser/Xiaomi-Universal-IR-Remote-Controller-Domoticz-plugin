@@ -1,4 +1,4 @@
-# Xiaomi Universal IR-Remote Controller plugin for Domoticz
+# Xiaomi Universal IR Remote Controller plugin for Domoticz
 Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz
 
 # Плагин Xiaomi Universal IR-Remote Controller для Domoticz
