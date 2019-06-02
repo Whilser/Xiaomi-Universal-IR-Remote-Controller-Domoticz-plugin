@@ -1,11 +1,11 @@
 # Xiaomi Universal IR Remote Controller plugin for Domoticz
 Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz. The plugin is under development. The plugin was tested with python 3.5.x and Domoticz 4.x installed on Raspberry Pi.
 
-Plugin creates a control center. The control center has several buttons. **Reset Level** - used to reset incorrectly recognized IR code. **Learn** - used to receive (learn) IR code, **Test** - to test received IR code, **Save Level** - to save received commands into memory. There is another button - **Create**, it creates a new device in Domoticz to control devices with an IR port.
+Plugin creates a **control center**. The control center have 5 buttons. **Reset Level** - used to reset incorrectly recognized IR code. **Learn** - used to receive (learn) IR code, **Test** - to test received IR code, **Save Level** - to save received commands into memory. There is another button - **Create**, it creates a new device in Domoticz to control your devices with an IR port.
 
 If before pressing **Create** only one level was saved, creates a Push On button, if two levels was saved it a Switch creates, which allows to turn on and off devices with an IR port. If 3 or more levels was saved, a selector switch is creates. 
 
-The plugin supports sending several IR commands at once when switching on / off in Domoticz. Just press the **Learn** button several times with sending an IR command from the remote before saving the level (**Save** button). 
+The plugin supports sending **several IR commands at once** when switching on / off in Domoticz. Just press the **Learn** button several times with sending an IR command from the remote before saving the level (**Save** button). 
 
 
 # Плагин Xiaomi Universal IR Remote Controller для Domoticz
@@ -28,13 +28,13 @@ The plugin supports sending several IR commands at once when switching on / off 
 
 ## Внимание! Плагин находится в разработке, в дальнейшем возможны изменения. 
 
-Для управления большинством устройств экосистемы умного дома Xiaomi необходим IP устройства и токен. Для настройки плагина заходим в панель управления Domoticz Настройки -> Оборудование из выпадающего списка выбираем Xiaomi Universal IR Remote Controller (Chuangmi IR), дадим ему имя, например, Chuangmi, вводим IP адрес и токен. Флажок Debug предназначен для выявления ошибок и отладки плагина. Для того, чтобы техническая информация не валилась в консоль, флажок Debug необходимо установить в положение False. Нажимаем добавить, после этого в переключателях появится командный центр управления Xiaomi Universal IR Remote Controller. 
+Для управления большинством устройств экосистемы умного дома Xiaomi необходим IP устройства и токен. Для настройки плагина заходим в панель управления Domoticz **Настройки** -> **Оборудование** из выпадающего списка выбираем Xiaomi Universal IR Remote Controller (Chuangmi IR), даем ему имя, например, Chuangmi, вводим IP адрес и токен. Флажок **Debug** предназначен для выявления ошибок и отладки плагина. Для того, чтобы техническая информация не сыпалась в консоль, флажок **Debug** рекомандуется установить в положение **False**. Нажимаем **Добавить**, после этого в переключателях появится командный центр управления Xiaomi Universal IR Remote Controller. 
 
 Центр управления имеет несколько кнопок. **Reset Level** - используется для сброса неправильно распознанных команд с физических пультов при обучении. **Learn** - используется для получения (обучения) пульта Xiaomi, **Test** - для тестирования полученных ИК команд, **Save Level** - для сохранения этих команд в память. Есть еще одна кнопка - **Create**, она создает новое устройство в Domoticz для управления устройствами с ИК портом. 
 
 Если до нажатия **Create** был сохранен один уровень команд, создается "включатель" :) (Push On button), если два - обычный выключатель (Switch), позволяющий включать и выключать устройства с ИК портом. Если уровней 3 и более - создается селекторный переключатель. 
 
-Созданные устройства в последствии можно редактировать, меняя значок, имя и название уровней. 
+Созданные устройства можно редактировать, меняя значок, имя и название уровней. 
 
 # Как добавить кнопку
 Нажимаем **Reset Level**  -> **Learn** после того, как индикатор на  Xiaomi Universal IR Remote Controller замигал, направляем на него пульт и нажимаем кнопку, которую хотим добавить. После этого нажимаем **Test** и если все прошло хорошо и команда сработала - нажимаем **Save Level** -> **Create**
