@@ -10,7 +10,7 @@ The plugin supports sending several IR commands at once when switching on / off 
 
 # Плагин Xiaomi Universal IR Remote Controller для Domoticz
 
-# Установка / How to Install
+## Установка / How to Install
 
     sudo apt-get install python3 python3-dev python3-pip
     sudo apt-get install libffi-dev libssl-dev
@@ -26,7 +26,7 @@ The plugin supports sending several IR commands at once when switching on / off 
 
     sudo service domoticz restart
 
-# Внимание! Плагин находится в разработке, в дальнейшем возможны изменения. 
+## Внимание! Плагин находится в разработке, в дальнейшем возможны изменения. 
 
 Для управления большинством устройств экосистемы умного дома Xiaomi необходим IP устройства и токен. Для настройки плагина заходим в панель управления Domoticz Настройки -> Оборудование из выпадающего списка выбираем Xiaomi Universal IR Remote Controller (Chuangmi IR), дадим ему имя, например, Chuangmi, вводим IP адрес и токен. Флажок Debug предназначен для выявления ошибок и отладки плагина. Для того, чтобы техническая информация не валилась в консоль, флажок Debug необходимо установить в положение False. Нажимаем добавить, после этого в переключателях появится командный центр управления Xiaomi Universal IR Remote Controller. 
 
