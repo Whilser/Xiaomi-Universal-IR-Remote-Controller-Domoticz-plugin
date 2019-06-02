@@ -228,9 +228,16 @@ class BasePlugin:
         Domoticz.Debug('Learn command called')
         ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
         ir.learn(key=1)
-        time.sleep(3)
-        LearnedIRCode = str(ir.read(key=1).get("code"))
-        return LearnedIRCode
+
+        learnedIRCode = ''
+        timeout = 10
+
+        while (len(learnedIRCode)==0) and (timeout > 0):
+            time.sleep(1)
+            timeout -= 1
+            learnedIRCode = str(ir.read(key=1).get("code"))
+
+        return learnedIRCode
 
     def sendIRCommands(self, IRCommands):
         ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
