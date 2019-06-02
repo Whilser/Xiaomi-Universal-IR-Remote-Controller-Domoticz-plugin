@@ -114,6 +114,10 @@ class BasePlugin:
                 self.sendIRCommands(IR_dict)
                 Devices[Unit].Update(nValue=Level, sValue='Set Level')
 
+        self.lastLearnedIRCode = ''
+        self.IRCodeCount = 0
+        self.IR_dict.clear()
+
     def HandleCommandUnitCommands(self, Level):
         if self.commandUnit not in Devices:
             Domoticz.Error('Command device is required!')
