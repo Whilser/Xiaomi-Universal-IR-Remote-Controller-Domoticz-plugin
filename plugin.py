@@ -230,7 +230,7 @@ class BasePlugin:
         ir.learn(key=1)
 
         learnedIRCode = ''
-        timeout = 10
+        timeout = 8
 
         while (len(learnedIRCode)==0) and (timeout > 0):
             time.sleep(1)
