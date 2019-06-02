@@ -94,6 +94,11 @@ class BasePlugin:
 
         Domoticz.Debug('Handle IR Commands')
         levelsList = self.data.get('Unit {0}'.format(Unit))
+
+        if levelsList == None:
+            Domoticz.Error('No config file was found for Unit {0} Remove Unit {0} from selectors.'.format(Unit))
+            return
+
         Domoticz.Debug('Count levels: {0}'.format(len(levelsList)))
 
         for levels in levelsList:
