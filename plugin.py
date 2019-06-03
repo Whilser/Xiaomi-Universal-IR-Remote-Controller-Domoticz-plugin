@@ -1,12 +1,12 @@
 #
 #           Xiaomi Universal IR Remote Controller (Chuangmi IR) python Plugin for Domoticz
-#           Version 0.1.0
+#           Version 0.1.1
 
 #           Powered by lib python miio https://github.com/rytilahti/python-miio
 #
 
 """
-<plugin key="Chuangmi" name="Xiaomi Universal IR Remote Controller (Chuangmi IR)" author="Whilser" version="0.1.0" wikilink="https://www.domoticz.com/wiki/ChuangmiIR" externallink="https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin">
+<plugin key="Chuangmi" name="Xiaomi Universal IR Remote Controller (Chuangmi IR)" author="Whilser" version="0.1.1" wikilink="https://www.domoticz.com/wiki/ChuangmiIR" externallink="https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin">
     <params>
         <param field="Address" label="IP Address" width="200px" required="true" default="127.0.0.1"/>
         <param field="Mode1" label="Token" width="300px" required="true" default="000000000000"/>
@@ -59,8 +59,12 @@ class BasePlugin:
         return
 
     def onStart(self):
+        global ir
+
         if Parameters['Mode2'] == 'Debug':
             Domoticz.Debugging(1)
+
+        ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
 
         if self.iconName not in Images: Domoticz.Image('Chuangmi-icons.zip').Create()
         iconID = Images[self.iconName].ID
@@ -154,7 +158,7 @@ class BasePlugin:
 
         # Save command
         if Level == 40:
-            devicesCount = self.devicesCount + 1
+            devicesCount = self.devicesCount + self.commandUnit
             self.levelsCount += 10
             if self.levelsCount == 10: self.data['Unit '+str(devicesCount)] = []
             self.data['Unit '+str(devicesCount)].append({
@@ -235,7 +239,6 @@ class BasePlugin:
 
     def learnIRCode(self):
         Domoticz.Debug('Learn command called')
-        ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
         ir.learn(key=1)
 
         learnedIRCode = ''
@@ -249,7 +252,6 @@ class BasePlugin:
         return learnedIRCode
 
     def sendIRCommands(self, IRCommands):
-        ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
         for key in sorted(IRCommands):
             Domoticz.Debug('IR Code: '+key)
             Domoticz.Debug(IRCommands.get(key))
