@@ -1,12 +1,18 @@
 #
 #           Xiaomi Universal IR Remote Controller (Chuangmi IR) python Plugin for Domoticz
-#           Version 0.1.1
+#           Version 0.1.2
 
 #           Powered by lib python miio https://github.com/rytilahti/python-miio
 #
 
 """
 <plugin key="Chuangmi" name="Xiaomi Universal IR Remote Controller (Chuangmi IR)" author="Whilser" version="0.1.1" wikilink="https://www.domoticz.com/wiki/ChuangmiIR" externallink="https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin">
+    <description>
+        <h2>Xiaomi Universal IR Remote Controller</h2><br/>
+        <h3>Configuration</h3>
+        Enter the IP Address and Token of your Chuangmi IR device.
+
+    </description>
     <params>
         <param field="Address" label="IP Address" width="200px" required="true" default="127.0.0.1"/>
         <param field="Mode1" label="Token" width="300px" required="true" default="000000000000"/>
@@ -64,13 +70,13 @@ class BasePlugin:
         if Parameters['Mode2'] == 'Debug':
             Domoticz.Debugging(1)
 
-        ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
-
         if self.iconName not in Images: Domoticz.Image('Chuangmi-icons.zip').Create()
         iconID = Images[self.iconName].ID
 
         if self.commandUnit not in Devices:
             Domoticz.Device(Name="Command",  Unit=self.commandUnit, TypeName="Selector Switch", Switchtype=18, Image=iconID, Options=self.commandOptions, Used=1).Create()
+
+        ir =  ChuangmiIr(Parameters['Address'],Parameters['Mode1'])
 
         DumpConfigToLog()
         Domoticz.Heartbeat(30)
@@ -121,7 +127,7 @@ class BasePlugin:
             elif Level == levels.get('Level'):
                 IR_dict = dict(levels.get('LearnedCodes'))
                 self.sendIRCommands(IR_dict)
-                Devices[Unit].Update(nValue=Level, sValue='Set Level')
+                Devices[Unit].Update(nValue=Level, sValue=str(Level))
 
         self.lastLearnedIRCode = ''
         self.IRCodeCount = 0
@@ -140,6 +146,7 @@ class BasePlugin:
             self.IRCodeCount = 0
             self.IR_dict.clear()
             Domoticz.Log('levels reset')
+            Devices[self.commandUnit].Update(nValue=Level, sValue=str(Level))
 
         # Learn Code
         if Level == 20:
@@ -147,17 +154,25 @@ class BasePlugin:
            Domoticz.Debug('Learned Code: '+ str(self.lastLearnedIRCode))
            self.IRCodeCount += 1
            self.IR_dict['IRCode'+str(self.IRCodeCount)] = self.lastLearnedIRCode
+           Domoticz.Log('Code Learned')
+           Devices[self.commandUnit].Update(nValue=Level, sValue=str(Level))
 
         # Test IR Commands
         if Level == 30:
             if len(self.lastLearnedIRCode) == 0:
-                Domoticz.Error('Command is required!')
+                Domoticz.Error('No IR command received!')
                 return
 
             self.sendIRCommands(self.IR_dict)
+            Domoticz.Log('IR Commands sent')
+            Devices[self.commandUnit].Update(nValue=Level, sValue=str(Level))
 
         # Save command
         if Level == 40:
+            if len(self.lastLearnedIRCode) == 0:
+                Domoticz.Error('No IR command received, nothing to save!')
+                return
+
             devicesCount = self.devicesCount + self.commandUnit
             self.levelsCount += 10
             if self.levelsCount == 10: self.data['Unit '+str(devicesCount)] = []
@@ -171,14 +186,22 @@ class BasePlugin:
             self.lastLearnedIRCode = ''
             self.IRCodeCount = 0
             Domoticz.Log('levels saved')
+            Devices[self.commandUnit].Update(nValue=Level, sValue=str(Level))
 
         # Create device
         if Level == 50:
+            if self.levelsCount == 0:
+                Domoticz.Error('No IR Levels saved, nothing to create!')
+                return
+
             self.devicesCount += 1
 
             self.dumpConfig()
             self.CreateDevices()
             self.levelsCount = 0
+
+            Domoticz.Log('Device Created')
+            Devices[self.commandUnit].Update(nValue=Level, sValue=str(Level))
 
     def onNotification(self, Name, Subject, Text, Status, Priority, Sound, ImageFile):
         Domoticz.Debug("Notification: " + Name + "," + Subject + "," + Text + "," + Status + "," + str(Priority) + "," + Sound + "," + ImageFile)
@@ -205,7 +228,7 @@ class BasePlugin:
                 self.data = json.load(json_file)
 
     def CreateDevices(self):
-        self.devicesCount = len(self.data)+1
+        self.devicesCount = len(self.data) + self.commandUnit
         Domoticz.Debug('Total chuangmi devices: {0}'.format(self.devicesCount))
 
         for key in sorted(self.data):
@@ -239,24 +262,33 @@ class BasePlugin:
 
     def learnIRCode(self):
         Domoticz.Debug('Learn command called')
-        ir.learn(key=1)
 
-        learnedIRCode = ''
+        learnedCode = ''
         timeout = 8
 
-        while (len(learnedIRCode)==0) and (timeout > 0):
-            time.sleep(1)
-            timeout -= 1
-            learnedIRCode = str(ir.read(key=1).get("code"))
+        try:
+            ir.learn(key=1)
+            while (len(learnedCode)==0) and (timeout > 0):
+                time.sleep(1)
+                timeout -= 1
+                learnedCode = str(ir.read(key=1).get("code"))
 
-        return learnedIRCode
+        except:
+            Domoticz.Error('Chuangmi device not responding. Check connection.')
+
+        if (len(learnedCode)==0): Domoticz.Error('No IR command received!')
+        return learnedCode
 
     def sendIRCommands(self, IRCommands):
-        for key in sorted(IRCommands):
-            Domoticz.Debug('IR Code: '+key)
-            Domoticz.Debug(IRCommands.get(key))
-            ir.play_raw(IRCommands.get(key),frequency='')
-            time.sleep(0.100)
+        try:
+            for key in sorted(IRCommands):
+                Domoticz.Debug('IR Code: '+key)
+                Domoticz.Debug(IRCommands.get(key))
+                ir.play_raw(IRCommands.get(key),frequency='')
+                time.sleep(0.100)
+        except:
+            Domoticz.Error('Chuangmi device not responding. Check connection.')
+
 
 global _plugin
 _plugin = BasePlugin()
