@@ -259,7 +259,7 @@ class BasePlugin:
 
         config_Path = os.path.join(str(Parameters['HomeFolder']), 'Chuangmi'+str(Parameters["HardwareID"])+'.json')
 
-        if os.path.isfile(json_Path):
+        if os.path.isfile(config_Path):
             Domoticz.Debug('Loading config from '+config_Path)
 
             with open(config_Path) as json_file:
