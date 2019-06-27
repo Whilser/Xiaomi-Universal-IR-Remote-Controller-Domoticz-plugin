@@ -1,16 +1,19 @@
 # Xiaomi Universal IR Remote Controller plugin for Domoticz
+![Chuangmi IR](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/ChuangmiIR.png)
 Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz. **Note:** The plugin is under development. The plugin was tested with python 3.5.x and Domoticz 4.x installed on Raspberry Pi.
 
 To configure plugin, just enter Device ID your Chuangmi IR. If you do not know the Device ID, just leave Device ID field defaulted 0, this will launch discover mode for your Chuangmi devices. Go to the log, it will display the found Chuangmi devices and the Device ID you need.
 
 Plugin creates a **control center**. The control center have 5 buttons. **Reset Level** - used to reset incorrectly recognized IR code. **Learn** - used to receive (learn) IR code, **Test** - to test received IR code, **Save Level** - to save received commands into memory. There is another button - **Create**, it creates a new device in Domoticz to control your devices with an IR port.
 
+![control center](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/Command.png)
+
 If before pressing **Create** only one level was saved, creates a Push On button, if two levels was saved it a Switch creates, which allows to turn on and off devices with an IR port. If 3 or more levels was saved, a selector switch is creates.
 
 The plugin supports sending **several IR commands at once** when switching on / off in Domoticz. Just press the **Learn** button several times with sending an IR command from the remote before saving the level (**Save** button).
 
-
-# Плагин Xiaomi Universal IR Remote Controller для Domoticz
+Example Units:
+![control center](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/Units.png)
 
 # Установка / How to Install
 
@@ -28,13 +31,18 @@ The plugin supports sending **several IR commands at once** when switching on / 
 
     sudo service domoticz restart
 
-## Внимание! Плагин находится в разработке, в дальнейшем возможны изменения.
+# Плагин Xiaomi Universal IR Remote Controller для Domoticz
+
+**Внимание! Плагин находится в разработке, в дальнейшем возможны изменения.**
 
 Для настройки плагина заходим в панель управления Domoticz **Настройки** -> **Оборудование** из выпадающего списка выбираем Xiaomi Universal IR Remote Controller (Chuangmi IR), даем ему имя, например, Chuangmi, вводим Device ID. Если вы не знаете Device ID своего устройства, просто оставьте поле Device ID по умолчанию равным 0 и нажимаем кнопку Добавить. Это запустит процесс сетевого поиска всех поддерживаемых ИК пультов Xiaomi. Найденные устройства будут отображены в логе, для просмотра которого идем в `Настройки` - `Журнал`. Флажок **Debug** предназначен для выявления ошибок и отладки плагина. Для того, чтобы техническая информация не сыпалась в консоль, флажок **Debug** рекомандуется установить в положение **False**. Нажимаем **Добавить**, после этого в переключателях появится командный центр управления Xiaomi Universal IR Remote Controller.
 
+![control center](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/Command.png)
+
 Центр управления имеет несколько кнопок. **Reset Level** - используется для сброса неправильно распознанных команд с физических пультов при обучении. **Learn** - используется для получения (обучения) пульта Xiaomi, **Test** - для тестирования полученных ИК команд, **Save Level** - для сохранения этих команд в память. Есть еще одна кнопка - **Create**, она создает новое устройство в Domoticz для управления устройствами с ИК портом.
 
-Если до нажатия **Create** был сохранен один уровень команд, создается "включатель" :) (Push On button), если два - обычный выключатель (Switch), позволяющий включать и выключать устройства с ИК портом. Если уровней 3 и более - создается селекторный переключатель.
+
+Если до нажатия **Create** был сохранен один уровень команд, создается кнопка (Push On button), если два - обычный выключатель (Switch), позволяющий включать и выключать устройства с ИК портом. Если уровней 3 и более - создается селекторный переключатель.
 
 Созданные устройства можно редактировать, меняя значок, имя и название уровней.
 
