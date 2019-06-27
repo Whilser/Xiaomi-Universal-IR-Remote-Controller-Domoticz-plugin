@@ -35,6 +35,12 @@ If you no longer want to use created devices, you can remove them. To do this, g
 
     sudo service domoticz restart
 
+# Обновление / How to update
+
+    cd domoticz/plugins/Chuangmi
+    git pull
+    sudo service domoticz restart
+
 # Плагин Xiaomi Universal IR Remote Controller для Domoticz
 
 **Внимание! Плагин находится в разработке, в дальнейшем возможны изменения.**
