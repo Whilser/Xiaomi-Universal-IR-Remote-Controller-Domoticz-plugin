@@ -23,7 +23,7 @@ The plugin supports sending **several IR commands at once** when switching on / 
     cd Chuangmi
     virtualenv -p python3 .env
     source .env/bin/activate
-    sudo pip3 install python-miio
+    pip3 install python-miio
     deactivate
 
     sudo service domoticz restart
