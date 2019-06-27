@@ -19,7 +19,7 @@ Units Example:
 
 If you no longer want to use created devices, you can remove them. To do this, go to the settings - devices. On the left, put a tick Chuangmi (to display only the plug-in devices), then in front of the device that we want to remove click on the arrow.
 
-# Установка / How to Install
+## Установка / How to Install
 
     sudo apt-get install python3 python3-dev python3-pip
     sudo apt-get install libffi-dev libssl-dev
@@ -35,7 +35,7 @@ If you no longer want to use created devices, you can remove them. To do this, g
 
     sudo service domoticz restart
 
-# Обновление / How to update
+## Обновление / How to update
 
     cd domoticz/plugins/Chuangmi
     git pull
