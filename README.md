@@ -1,5 +1,6 @@
 # Xiaomi Universal IR Remote Controller plugin for Domoticz
 ![Chuangmi IR](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/ChuangmiIR.png)
+
 Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz. **Note:** The plugin is under development. The plugin was tested with python 3.5.x and Domoticz 4.x installed on Raspberry Pi.
 
 To configure plugin, just enter Device ID your Chuangmi IR. If you do not know the Device ID, just leave Device ID field defaulted 0, this will launch discover mode for your Chuangmi devices. Go to the log, it will display the found Chuangmi devices and the Device ID you need.
@@ -12,8 +13,10 @@ If before pressing **Create** only one level was saved, creates a Push On button
 
 The plugin supports sending **several IR commands at once** when switching on / off in Domoticz. Just press the **Learn** button several times with sending an IR command from the remote before saving the level (**Save** button).
 
-Example Units:
+Units Example:
 ![control center](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/Units.png)
+
+If you no longer want to use created devices, you can remove them. To do this, go to the settings - devices. On the left, put a tick Chuangmi (to display only the plug-in devices), then in front of the device that we want to remove click on the arrow.
 
 # Установка / How to Install
 
@@ -61,4 +64,4 @@ Example Units:
 
 Если устройства надоели и больше не хотите далее использовать, можно их удалить. Для этого заходим настройки - устройства. Слева ставим галочку Chuangmi (для отображения только устройств плагина), далее напротив устройства, которое мы хотим удалить нажимаем на стрелочку.
 
-Просто удалять устройства из переключателей бесполезно, они там снова воссоздаются после перезагрузки системы плагинов :)
+Просто удалять устройства из переключателей бесполезно, они там снова воссоздаются после перезагрузки системы плагинов.
