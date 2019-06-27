@@ -1,7 +1,8 @@
 # Xiaomi Universal IR Remote Controller plugin for Domoticz
-![Chuangmi IR](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/ChuangmiIR.png)
 
 Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz. **Note:** The plugin is under development. The plugin was tested with python 3.5.x and Domoticz 4.x installed on Raspberry Pi.
+
+![Chuangmi IR](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/ChuangmiIR.png)
 
 To configure plugin, just enter Device ID your Chuangmi IR. If you do not know the Device ID, just leave Device ID field defaulted 0, this will launch discover mode for your Chuangmi devices. Go to the log, it will display the found Chuangmi devices and the Device ID you need.
 
