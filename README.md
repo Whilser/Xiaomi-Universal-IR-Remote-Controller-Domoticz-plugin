@@ -4,7 +4,7 @@ Xiaomi Universal IR Remote Controller (Chuangmi IR) plugin for Domoticz. **Note:
 
 ![Chuangmi IR](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/ChuangmiIR.png)
 
-To configure plugin, just enter Device ID your Chuangmi IR. If you do not know the Device ID, just leave Device ID field defaulted 0, this will launch discover mode for your Chuangmi devices. Go to the log, it will display the found Chuangmi devices and the Device ID you need.
+To configure plugin, just enter Device IP and Token of your Chuangmi IR.
 
 Plugin creates a **control center**. The control center have 5 buttons. **Reset Level** - used to reset incorrectly recognized IR code. **Learn** - used to receive (learn) IR code, **Test** - to test received IR code, **Save Level** - to save received commands into memory. There is another button - **Create**, it creates a new device in Domoticz to control your devices with an IR port.
 
@@ -45,7 +45,7 @@ If you no longer want to use created devices, you can remove them. To do this, g
 
 **Внимание! Плагин находится в разработке, в дальнейшем возможны изменения.**
 
-Для настройки плагина заходим в панель управления Domoticz **Настройки** -> **Оборудование** из выпадающего списка выбираем Xiaomi Universal IR Remote Controller (Chuangmi IR), даем ему имя, например, Chuangmi, вводим Device ID. Если вы не знаете Device ID своего устройства, просто оставьте поле Device ID по умолчанию равным 0 и нажимаем кнопку Добавить. Это запустит процесс сетевого поиска всех поддерживаемых ИК пультов Xiaomi. Найденные устройства будут отображены в логе, для просмотра которого идем в `Настройки` - `Журнал`. Флажок **Debug** предназначен для выявления ошибок и отладки плагина. Для того, чтобы техническая информация не сыпалась в консоль, флажок **Debug** рекомандуется установить в положение **False**. Нажимаем **Добавить**, после этого в переключателях появится командный центр управления Xiaomi Universal IR Remote Controller.
+Для настройки плагина заходим в панель управления Domoticz **Настройки** -> **Оборудование** из выпадающего списка выбираем Xiaomi Universal IR Remote Controller (Chuangmi IR), даем ему имя, например, Chuangmi, вводим IP и токен вашего устройства. Флажок **Debug** предназначен для выявления ошибок и отладки плагина. Для того, чтобы техническая информация не сыпалась в консоль, флажок **Debug** рекомандуется установить в положение **False**. Нажимаем **Добавить**, после этого в переключателях появится командный центр управления Xiaomi Universal IR Remote Controller.
 
 ![control center](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/Command.png)
 
