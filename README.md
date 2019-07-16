@@ -12,14 +12,14 @@ Plugin creates a **control center**. The control center have 5 buttons. **Reset 
 
 If before pressing **Create** only one level was saved, creates a Push On button, if two levels was saved it a Switch creates, which allows to turn on and off devices with an IR port. If 3 or more levels was saved, a selector switch is creates.
 
-The plugin supports sending **several IR commands at once** when switching on / off in Domoticz. Just press the **Learn** button several times with sending an IR command from the remote before saving the level (**Save** button).
+The plugin supports sending **multiple IR commands at once** when switching on / off in Domoticz (for example, switching tv channels). Just press the `Learn` button, send an IR command from your remote, repet last step as many times as you need IR commands, finnaly press `Save` button. After pressing save button, the device will be created.
 
 Units Example:
 ![control center](https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin/raw/master/images/Units.png)
 
 If you no longer want to use created devices, you can remove them. To do this, go to the settings - devices. On the left, put a tick Chuangmi (to display only the plug-in devices), then in front of the device that we want to remove click on the arrow.
 
-# Установка / How to Install
+## Установка / How to Install:
 
     sudo apt-get install python3 python3-dev python3-pip
     sudo apt-get install libffi-dev libssl-dev
@@ -35,7 +35,7 @@ If you no longer want to use created devices, you can remove them. To do this, g
 
     sudo service domoticz restart
 
-# Обновление / How to update
+## Обновление / How to update:
 
     cd domoticz/plugins/Chuangmi
     git pull
