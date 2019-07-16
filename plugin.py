@@ -1,21 +1,18 @@
 #
 #           Xiaomi Universal IR Remote Controller (Chuangmi IR) python Plugin for Domoticz
-#           Version 0.2.0
+#           Version 0.3.0
 
 #           Powered by lib python miio https://github.com/rytilahti/python-miio
 #
 
 """
-<plugin key="Chuangmi" name="Xiaomi Universal IR Remote Controller (Chuangmi IR)" author="Whilser" version="0.2.0" wikilink="https://www.domoticz.com/wiki/ChuangmiIR" externallink="https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin">
+<plugin key="Chuangmi" name="Xiaomi Universal IR Remote Controller (Chuangmi IR)" author="Whilser" version="0.3.0" wikilink="https://www.domoticz.com/wiki/ChuangmiIR" externallink="https://github.com/Whilser/Xiaomi-Universal-IR-Remote-Controller-Domoticz-plugin">
     <description>
         <h2>Xiaomi Universal IR Remote Controller</h2><br/>
-        <h3>Configuration</h3>
-        Enter Device ID of your Chuangmi IR. If you do not know the Device ID, just leave Device ID field defaulted 0, <br/>
-        this will launch discover mode for your Chuangmi devices. Go to the log, it will display the found Chuangmi devices and the Device ID you need. <br/>
-
     </description>
     <params>
-        <param field="Mode3" label="Device ID" width="150px" required="true" default="0"/>
+        <param field="Address" label="IP Address" width="200px" required="true" default="127.0.0.1"/>
+        <param field="Mode1" label="Token" width="250px" required="true" default="0"/>
         <param field="Mode2" label="Debug" width="75px">
             <options>
                 <option label="True" value="Debug"/>
@@ -79,14 +76,10 @@ class BasePlugin:
 
         if Parameters['Mode2'] == 'Debug': Domoticz.Debugging(1)
 
-        if Parameters['Mode3'] == '0':
-            self.miio_discover()
-            return
-
         self.loadConfig()
         self.CreateDevices()
 
-        if not self.miio_discover(Parameters['Mode3']): return
+        if not self.miio_connect(): return
 
         if self.iconName not in Images: Domoticz.Image('Chuangmi-icons.zip').Create()
         iconID = Images[self.iconName].ID
@@ -109,7 +102,7 @@ class BasePlugin:
     def onCommand(self, Unit, Command, Level, Hue):
         Domoticz.Debug("onCommand called for Unit " + str(Unit) + ": Parameter '" + str(Command) + "', Level: " + str(Level))
 
-        if not self.miio_discover(Parameters['Mode3']): return
+        if not self.miio_connect(): return
 
         if Unit == self.commandUnit:
             Domoticz.Debug('Handle Command Unit Commands')
@@ -222,13 +215,11 @@ class BasePlugin:
 
     def onHeartbeat(self):
         Domoticz.Debug("onHeartbeat called")
-
-        if Parameters['Mode3'] == '0': return
         self.handshakeTime -= 1
 
         if self.handshakeTime <= 0:
             self.handshakeTime = 3
-            if not self.miio_discover(Parameters['Mode3']): return
+            if not self.miio_connect(): return
 
             try:
                 m = ir.do_discover()
@@ -268,6 +259,9 @@ class BasePlugin:
             self.IP = config['IP']
             self.token = config['Token']
             self.deviceID = config['DeviceID']
+        else:
+            self.IP = Parameters['Address']
+            self.token = Parameters['Mode1']
 
     def CreateDevices(self):
         self.devicesCount = len(self.data) + self.commandUnit
@@ -303,7 +297,7 @@ class BasePlugin:
 
     def learnIRCode(self):
         Domoticz.Debug('Learn command called')
-        if not self.miio_discover(Parameters['Mode3']): return
+        if not self.miio_connect(): return
 
         learnedCode = ''
         timeout = 8
@@ -316,110 +310,47 @@ class BasePlugin:
                 learnedCode = str(ir.read(key=1).get("code"))
 
         except Exception as e:
-            Domoticz.Error('{0} with ID {1} is not responding, check power/network connection. Error: {2}'.format(Parameters['Name'], Parameters['Mode3'], e.__class__))
+            Domoticz.Error('{0} with IP {1} is not responding. Error: {2}'.format(Parameters['Name'], self.IP, e.__class__))
 
         if (len(learnedCode)==0): Domoticz.Error('No IR command received!')
         return learnedCode
 
     def sendIRCommands(self, IRCommands):
-        if not self.miio_discover(Parameters['Mode3']): return
+        if not self.miio_connect(): return
 
         try:
             for key in sorted(IRCommands):
                 Domoticz.Debug('IR Code: '+key)
                 Domoticz.Debug(IRCommands.get(key))
-                ir.play_raw(IRCommands.get(key),frequency='')
+                #ir.play_raw(IRCommands.get(key),frequency='')
+                ir.play(IRCommands.get(key))
                 time.sleep(0.100)
 
         except Exception as e:
-            Domoticz.Error('{0} with ID {1} is not responding, check power/network connection. Error: {2}'.format(Parameters['Name'], Parameters['Mode3'], e.__class__))
+            Domoticz.Error('{0} with IP {1} is not responding, check power/network connection. Error: {2}'.format(Parameters['Name'], self.IP , e.__class__))
             self.discovered = False
 
             for x in Devices:
                 if Devices[x].TimedOut == False: Devices[x].Update(nValue=Devices[x].nValue, sValue=Devices[x].sValue, TimedOut = True)
 
-    def miio_discover(self, MiioID = None):
+    def miio_connect(self):
         if self.discovered: return True
 
         global ir
 
         if len(self.IP) > 0:
             try:
-                Domoticz.Debug('Loaded saved configuration.')
-                Domoticz.Log('Attempt to connect to Chuangmi IR device with ID: {0}, IP address: {1} and token: {2}'.format(self.deviceID, self.IP, self.token))
+                Domoticz.Log('Attempt to connect to Chuangmi IR device with IP: {0} and token: {1}'.format(self.IP, self.token))
 
                 ir =  ChuangmiIr(self.IP, self.token)
                 info = ir.info()
 
                 self.discovered = True
+                Domoticz.Log('Connected.')
                 return self.discovered
 
             except Exception as e:
-                Domoticz.Log('Could not connect to {0} with IP {1}, starting discover.'.format(Parameters['Name'], self.IP))
-                self.IP = ''
-
-        Domoticz.Debug('Starting discover with Device ID: {}.'.format(MiioID))
-        self.discovered = False
-        timeout = 5
-        addr = '<broadcast>'
-        discoveredDevice = None
-        helobytes = bytes.fromhex('21310020ffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
-
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        s.settimeout(timeout)
-        s.sendto(helobytes, (addr, 54321))
-
-        while True:
-            try:
-                data, addr = s.recvfrom(1024)
-                m = Message.parse(data)
-
-                self.token = codecs.encode(m.checksum, 'hex').decode()
-                self.deviceID = binascii.hexlify(m.header.value.device_id).decode()
-                self.IP = addr[0]
-
-                if ((self.token != '0'*32) and (self.token != 'f'*32)):
-                    if MiioID is None:
-                        item = ChuangmiIr(self.IP, self.token)
-                        info = item.info()
-                        Domoticz.Log('Discovered. Device Name: {0}, Device ID: {2} IP address: {1}, Token: {3}. '.format(info.model, self.IP,self.deviceID,self.token))
-                    else:
-                        if self.deviceID == MiioID:
-                            Domoticz.Log('Connected to Chuangmi IR device ID: {0} with IP address: {1} and token: {2}'.format(self.deviceID, self.IP, self.token))
-
-                            config = {
-                                "DeviceID": self.deviceID,
-                                "IP": self.IP,
-                                "Token": self.token
-                            }
-
-                            config_Path = os.path.join(str(Parameters['HomeFolder']), 'Chuangmi'+str(Parameters["HardwareID"])+'.json')
-                            with open(config_Path, 'w') as outfile:
-                                if json.dump(config, outfile, indent=4): Domoticz.Debug('Config file was saved.')
-
-                            self.discovered = True
-                            self.handshakeTime = 3
-                            ir =  ChuangmiIr(self.IP, self.token)
-
-                            for x in Devices:
-                                if  Devices[x].TimedOut == True: Devices[x].Update(nValue=Devices[x].nValue, sValue=Devices[x].sValue, TimedOut = False)
-
-                            return self.discovered
-
-            except socket.timeout:
-                Domoticz.Debug('Discovery done')
-                if ((MiioID is not None) and (self.discovered == False)):
-                    Domoticz.Error('Could not discover Chuangmi IR with Device ID = {0}. Check power/network/Device ID.'.format(MiioID))
-                    self.IP = ''
-                    self.handshakeTime = 3
-                    for x in Devices:
-                        if  Devices[x].TimedOut == False: Devices[x].Update(nValue=Devices[x].nValue, sValue=Devices[x].sValue, TimedOut = True)
-
-                return self.discovered
-            except Exception as ex:
-                Domoticz.Error('Error while reading discover results: {0}'.format(ex))
-                break
+                Domoticz.Log('Could not connect to {0} with IP {1}, check IP and Token.'.format(Parameters['Name'], self.IP))
 
 global _plugin
 _plugin = BasePlugin()
