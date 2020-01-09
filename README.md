@@ -30,7 +30,7 @@ If you no longer want to use created devices, you can remove them. To do this, g
     cd Chuangmi
     virtualenv -p python3 .env
     source .env/bin/activate
-    pip3 install python-miio
+    pip3 install python-miio==0.4.6
     deactivate
 
     sudo service domoticz restart
