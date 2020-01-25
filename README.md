@@ -41,9 +41,8 @@ If you no longer want to use created devices, you can remove them. To do this, g
     git pull
     sudo service domoticz restart
 
-If you liked it, buy me coffee!
+If you liked it, buy me coffee! <br>
 <a href="https://www.buymeacoffee.com/K8oYBpO" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="If you liked it, buy me coffee!" style="height: 51px !important;width: 217px !important;" ></a>
-
 
 # Плагин Xiaomi Universal IR Remote Controller для Domoticz
 
